@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-import MovieList from './components/MoviesList';
+import MoviesList from './components/MoviesList';
 import './App.css';
 
 function App() {
@@ -32,26 +32,21 @@ function App() {
     setLoading(false);
   },[]);
 
-  function CancelHandler(somedata){clearInterval(somedata)};
 
   useEffect(()=>{
-    let data=setInterval(() => {
       fetchMoviesHandler();
-    }, 2000);
-    return CancelHandler(data);
   },[fetchMoviesHandler])
 
   return (
     <React.Fragment>
       <section>
         <button onClick={fetchMoviesHandler}>Fetch Movies</button>
-        <button onClick={CancelHandler}>Cancel Request</button>
       </section>
       <section>
         {loading && <div className="spinner-border" role="status">
           <span className="visually-hidden">Loading...</span>
         </div>}
-       {!loading && <MovieList movies={movies} />}
+       {!loading && <MoviesList movies={movies} />}
        {!loading && movies.length===0 && !error && <p>No Movies Found.</p>}
        {!loading && error && <p>{error}</p>}
       </section>
